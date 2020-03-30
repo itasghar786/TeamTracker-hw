@@ -1,10 +1,13 @@
-DROP DATABASE IF EXISTS employee_DB;
+
+DROP DATABASE IF EXISTS emplaoyee_DB;
 
 CREATE DATABASE employee_DB;
 
 USE employee_DB;
 
-CREATE TABLE department (
+
+
+ CREATE TABLE department (
     department_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(30) NOT NULL
 );
