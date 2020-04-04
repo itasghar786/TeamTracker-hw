@@ -8,34 +8,33 @@ USE employee_DB;
 
 
  CREATE TABLE department (
-    department_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id INT NOT NULL AUTO_INCREMENT ,
     name VARCHAR(30) NOT NULL
+    PRIMARY KEY (id)
 );
 
 CREATE TABLE role (
-    role_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id INT NOT NULL AUTO_INCREMENT ,
     title VARCHAR(30) NOT NULL, 
-    salary DECIMAL,
-    department_id INT,
-    FOREIGN KEY (department_id) REFERENCES department(department_id)
+    salary DECIMAL 10,2 NOT NULL,
+    department_id INT NOT NULL,
+    PRIMARY KEY(id)
 );
 
 CREATE TABLE employee (
-    employee_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
+    id INT NOT NULL AUTO_INCREMENT,
     first_name VARCHAR(30) NOT NULL, 
     last_name VARCHAR(30) NOT NULL,
-    role_id INT,
-    manager_id INT,
-    FOREIGN KEY (role_id) REFERENCES role(role_id),
-    FOREIGN KEY (manager_id) REFERENCES department(department_id)
+    role_id INT NOT NULL,
+    manager_id INT NOT NULL,
+    PRIMARY KEY(id)
 )
 
---SELECTS and JOINS the id's from the Role and Department tables together into one result.
-SELECT employee.first_name, 
-	employee.last_name,
-	role.title AS Title,
-    role.salary AS Salary,
-    department.name AS Department
-FROM employee 
-	INNER JOIN role ON employee.role_id=role.role_id
-    INNER JOIN department ON employee.role_id=department.department_id
+INSERT INTO department (name)
+VALUES ('Management'),('Sales'),('Accounting');
+
+INSERT INTO role (title, salary, department_id)
+VALUES ('Regional Manager', 50000, 1),('Assistant to Regional Manager', 30000, 2),('Salesman', 70000, 3),('Accountant',50000,4);
+
+INSERT INTO employee (first_name, last_name, role_id, manager_id)
+VALUES ('Asghar', 'Sheikh', 1, null),('Sufyan','Sheikh',2,null),('Harry','Magal', 3, null),('Dwight ', 'deel', 3,null),('John ','Scott',4,null),('Mike', 'Pence',4,null);
