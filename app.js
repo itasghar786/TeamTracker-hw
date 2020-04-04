@@ -1,19 +1,20 @@
+//requiring dependencies 
 const inquirer = require('inquirer');
 const mysql = require('mysql');
 const consoleTable = require('console.table');
 
-
+// connecting to MYSQL
 const connection = mysql.createConnection({
     host: 'localhost',
     port: 3306,
     user: "root",
     password: "root",
-    database: "employee_DB"
+    database: "employee_DB" 
 });
 
+//first promt to user 
 
-
-function userPrompt(){
+function initialPrompt(){
     inquirer.prompt({
       type: "list",
       message: "What would you like to do?",
@@ -59,25 +60,25 @@ function userPrompt(){
         }
       })
     }
-
+// functiong for vewing departments 
       function viewDepartments(){
         let query = connection.query(
           `SELECT * FROM department`,(err,res)=>{
             if (err) throw err;
             consol.table(res)
             console.log ('List of all departmets')
-            initialPromt()
+            initialPrompt()
           }
         )
       }
-
+        // 
       function viewRoles(){
         let query = connection.query(
           `SELECT * FROM role`, (err,res) =>{
             if (err) throw err;
             console.table(res);
             console.log("list of all Roles");
-            initialPromt()
+            initialPrompt()
           }
         )
       }
@@ -87,7 +88,7 @@ function userPrompt(){
           `SELECT * FROM employee`,(err,res) =>{
             if (err) throw err;
             consol.log ("list all Employees")
-            initialPromt()
+            initialPrompt()
 
           }
           
@@ -99,7 +100,7 @@ function userPrompt(){
             type: 'input',
             message: 'What name of department would you like to add?',
             name: 'addDepartmentPromt'
-          }) .then (data =>{
+          }) .then (data =>{r
             connection.query(
               `INSERT INTO department SET ?`,{name: data.addDepartmentsPromt},(err,res)=>{
                 if(err)throw err;
@@ -111,7 +112,7 @@ function userPrompt(){
         }
 
         function addRoles(){
-          inquirer.promt([{
+          inquirer.prompt([{
             type: 'input',
             message: 'What is the title role?',
             name: 'titlePrompt'
@@ -137,7 +138,7 @@ function userPrompt(){
             connection.end()
           })
           }
-
+          //funnction promt user for adding employee
           function addEmployees(){
             inquirer.prompt([{
               type: 'input',
@@ -162,7 +163,7 @@ function userPrompt(){
               connection.end()
             })
           }
-          
+          //updating employee role
           function updateEmployeeRole() {
             let employees = [
                 'John Scott',
@@ -207,14 +208,13 @@ function userPrompt(){
               })
               connection.end()
           }
-          
-          
+          // exiting the connection   
           function exit(){
             connection.end();
           }
           
           
-         // initialPrompt()
+         initialPrompt()
         
         
         
