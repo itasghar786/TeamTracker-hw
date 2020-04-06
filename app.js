@@ -62,18 +62,19 @@ function initialPrompt(){
     }
 // functiong for vewing departments 
       function viewDepartments(){
-        let query = connection.query(
+         connection.query(
           `SELECT * FROM department`,(err,res)=>{
             if (err) throw err;
-            consol.table(res)
-            console.log ('List of all departmets')
+
+        console.table(res);
+            console.log ('List of all departmets');
             initialPrompt()
           }
         )
       }
         // 
       function viewRoles(){
-        let query = connection.query(
+          connection.query(
           `SELECT * FROM role`, (err,res) =>{
             if (err) throw err;
             console.table(res);
@@ -84,10 +85,11 @@ function initialPrompt(){
       }
 
       function viewEmployees(){
-        let query = connection.query(
+         connection.query(
           `SELECT * FROM employee`,(err,res) =>{
             if (err) throw err;
-            consol.log ("list all Employees")
+              console.table(res);
+            console.log ("list all Employees");
             initialPrompt()
 
           }
@@ -100,14 +102,17 @@ function initialPrompt(){
             type: 'input',
             message: 'What name of department would you like to add?',
             name: 'addDepartmentPromt'
-          }) .then (data =>{r
+          }) .then (data =>{
             connection.query(
-              `INSERT INTO department SET ?`,{name: data.addDepartmentsPromt},(err,res)=>{
+              `INSERT INTO department SET ?`,{name: data.addDepartmentPromt},(err,res)=>{
                 if(err)throw err;
-                console.log(res)
+                console.log(res);
+                initialPrompt()
               }
+
             )
             connection.end()
+            
           })
         }
 
@@ -130,9 +135,10 @@ function initialPrompt(){
           }])
           .then (data=>{
             connection.query(
-              'INSERT INTO role SET ?', {title: data.roleTitlePrompt,salary:data.roleSalaryPromt, department_id: data.roleIDPrompt}, (err,res)=>{
+              'INSERT INTO role SET ?', {title: data.titlePrompt,salary:data.salaryPrompt, department_id: data.idPrompt}, (err,res)=>{
                 if (err) throw err;
-                console.log(res)
+                console.log(res);
+                initialPrompt()
               }
             )
             connection.end()
@@ -157,7 +163,8 @@ function initialPrompt(){
               connection.query(
                 'INSERT INTO employee SET ?', {first_name: data.FnamePrompt, last_name: data.secondNamePrompt, role_id: data.employeeRoleIDPrompt},  (err, res)=>{
                   if(err) throw err;
-                    console.log(res)
+                    console.log(res);
+                    initialPrompt()
                 }
               )
               connection.end()
@@ -200,10 +207,13 @@ function initialPrompt(){
               .then(answers => {
                   connection.query(`
                   UPDATE employeeDB.employee 
-                  SET role_id = '${roles.indexOf(answers.role) + 1}' WHERE (id = '${employees.indexOf(answers.employee) + 1}');`,
-                      (err, result) => {
+                  SET role_id = '${roles.indexOf(answers.roles) + 1}' WHERE (id = '${employees.indexOf(answers.employees) + 1}');`,
+                      (err, res) => {
                           if (err) throw err;
-                          console.log(result);
+                          console.table(res);
+                          console.log(res);
+                          initialPrompt()
+
                       })
               })
               connection.end()
