@@ -24,8 +24,4 @@ Liscence
 MIT
 
 Questions
-If You Have any Questions, You can Reach Me at My [itAsghar786@gmail.com]null
-
-Github Avatar
-
-© 2020 GitHub, Inc.
+If You Have any Questions, You can Reach Me at My [itAsghar786@gmail.com]
