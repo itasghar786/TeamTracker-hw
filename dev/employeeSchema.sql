@@ -43,11 +43,3 @@ INSERT INTO employee  (first_name, last_name, role_id,department_id)
 VALUES ('Asghar', 'Sheikh', 1,NULL),('Sufyan','Sheikh',2, NULL),('Harry','Magal', 3, NULL),('Dwight ', 'deel', 3, NULL),('John ','Scott',4,NULL),('Mike', 'Pence',4,NULL);
 
 
-SELECT employee.first_name, 
-	employee.last_name,
-	role.title AS Title,
-    role.salary AS Salary,
-    department.name AS Department
-FROM employee 
-	INNER JOIN role ON employee.role_id=role.role_id
-    INNER JOIN department ON employee.role_id=department.department_id

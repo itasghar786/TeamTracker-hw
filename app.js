@@ -1,6 +1,8 @@
 //requiring dependencies 
 const inquirer = require('inquirer');
 const mysql = require('mysql');
+const chalk = require('chalk');
+const figlet = require('figlet');
 const consoleTable = require('console.table');
 
 // connecting to MYSQL
@@ -15,6 +17,18 @@ const connection = mysql.createConnection({
 //first promt to user 
 
 function initialPrompt(){
+
+  figlet('EMPLOYEE TRACKER', function (err, data) {
+    if (err) {
+        console.log('Something went wrong...');
+        console.dir(err);
+        return;
+    }
+    console.log(chalk.green(data))
+});
+
+
+
     inquirer.prompt({
       type: "list",
       message: "What would you like to do?",
@@ -100,7 +114,7 @@ function initialPrompt(){
         function addDepartments(){
           inquirer.prompt ({
             type: 'input',
-            message: 'What name of department would you like to add?',
+            message: 'What name of department would you like to add to departments?',
             name: 'addDepartmentPromt'
           }) .then (data =>{
             connection.query(
@@ -111,7 +125,7 @@ function initialPrompt(){
               }
 
             )
-            connection.end()
+            
             
           })
         }
@@ -119,7 +133,7 @@ function initialPrompt(){
         function addRoles(){
           inquirer.prompt([{
             type: 'input',
-            message: 'What is the title role?',
+            message: 'What is the title of the role?',
             name: 'titlePrompt'
 
           },{
@@ -129,7 +143,7 @@ function initialPrompt(){
 
           },{
             type:'input',
-            message:'What is the deparrtment ID',
+            message:'What is the department ID?',
             name: 'idPrompt'
 
           }])
@@ -141,7 +155,7 @@ function initialPrompt(){
                 initialPrompt()
               }
             )
-            connection.end()
+            
           })
           }
           //funnction promt user for adding employee
@@ -156,7 +170,7 @@ function initialPrompt(){
               name: 'secondNamePrompt'
             },{
               type: 'input',
-              message: 'What is the employee you would like to adds role ID?',
+              message: 'What is the employee you would like to add role ID?',
               name: 'employeeRoleIDPrompt'
             }])
             .then(data=>{
@@ -167,7 +181,7 @@ function initialPrompt(){
                     initialPrompt()
                 }
               )
-              connection.end()
+              
             })
           }
           //updating employee role
@@ -206,7 +220,7 @@ function initialPrompt(){
             ])
               .then(answers => {
                   connection.query(`
-                  UPDATE employeeDB.employee 
+                  UPDATE employee 
                   SET role_id = '${roles.indexOf(answers.roles) + 1}' WHERE (id = '${employees.indexOf(answers.employees) + 1}');`,
                       (err, res) => {
                           if (err) throw err;
@@ -216,7 +230,7 @@ function initialPrompt(){
 
                       })
               })
-              connection.end()
+              
           }
           // exiting the connection   
           function exit(){
